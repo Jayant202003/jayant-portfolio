@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 11 14 20;
+  --surface: 19 24 34;
+  --line: 30 37 48;
+  --text: 237 238 240;
+  --text-muted: 124 132 148;
+  --accent: 232 163 61;
+  --draft: 61 165 232;
+}
+
+[data-theme="light"] {
+  --bg: 250 249 246;
+  --surface: 240 239 233;
+  --line: 222 220 211;
+  --text: 20 22 26;
+  --text-muted: 110 108 99;
+  --accent: 184 127 44;
+  --draft: 44 110 158;
+}
+
+* {
+  scroll-behavior: auto; /* Lenis owns smooth scroll; avoid double-handling */
+}
+
+html,
+body {
+  background: rgb(var(--bg));
+  color: rgb(var(--text));
+}
+
+body {
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+/* Blueprint dot/line grid backdrop, deliberately faint */
+.bp-grid {
+  background-image: linear-gradient(rgb(var(--line)) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--line)) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: -1px -1px;
+}
+
+.bp-label {
+  font-family: var(--font-jetbrains-mono), monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  color: rgb(var(--text-muted));
+}
+
+/* Corner-bracket "viewfinder" hover state used on project cards —
+   the site's signature interaction motif, echoing technical drawing marks. */
+.bp-bracket {
+  position: relative;
+}
+.bp-bracket::before,
+.bp-bracket::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: rgb(var(--accent));
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.65, 0, 0.35, 1), transform 0.3s;
+}
+.bp-bracket::before {
+  top: 0;
+  left: 0;
+  border-top: 2px solid;
+  border-left: 2px solid;
+  transform: translate(6px, 6px);
+}
+.bp-bracket::after {
+  top: 0;
+  right: 0;
+  border-top: 2px solid;
+  border-right: 2px solid;
+  transform: translate(-6px, 6px);
+}
+.bp-bracket:hover::before,
+.bp-bracket:focus-visible::before {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+.bp-bracket:hover::after,
+.bp-bracket:focus-visible::after {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* Custom cursor — desktop, fine-pointer only. Never rendered on touch. */
+.bp-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgb(var(--accent));
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 100;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+  transition: width 0.2s, height 0.2s, opacity 0.2s;
+  will-change: transform;
+}
+
+@media (pointer: coarse) {
+  .bp-cursor {
+    display: none;
+  }
+}
+
+/* Visible, high-contrast focus ring everywhere — never suppressed */
+:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Global reduced-motion fallback: kill scroll-linked transforms, keep opacity */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
