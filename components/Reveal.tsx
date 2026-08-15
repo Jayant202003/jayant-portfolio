@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import clsx from "clsx";
+import type { ElementType } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,7 +13,7 @@ type RevealProps = {
   className?: string;
   /** Stagger delay in seconds, useful when several Reveals sit in a row */
   delay?: number;
-  as?: keyof JSX.IntrinsicElements;
+ as?: ElementType;
 };
 
 /**

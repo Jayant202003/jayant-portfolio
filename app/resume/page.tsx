@@ -1,14 +1,16 @@
+import Link from "next/link";
+
 export default function ResumePage() {
   return (
     <main className="min-h-screen bg-ink px-6 py-12 md:px-12">
       <div className="mx-auto max-w-6xl">
         <div className="mb-8 flex items-center justify-between">
-          <a
-            href="/"
-            className="bp-label hover:text-brass"
-          >
-            ← Back to portfolio
-          </a>
+          <Link
+  href="/"
+  className="bp-label hover:text-brass"
+>
+  ← Back to portfolio
+</Link>
 
           <a
             href="/resume.pdf"
